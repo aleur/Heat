@@ -1,0 +1,10 @@
+C:\Users\slatt\source\repos\Heat\Heat\bin\Debug\Heat.dll
+C:\Users\slatt\source\repos\Heat\Heat\bin\Debug\Heat.pdb
+C:\Users\slatt\source\repos\Heat\Heat\bin\Debug\ScriptHookVDotNet3.dll
+C:\Users\slatt\source\repos\Heat\Heat\bin\Debug\ScriptHookVDotNet3.pdb
+C:\Users\slatt\source\repos\Heat\Heat\bin\Debug\ScriptHookVDotNet3.xml
+C:\Users\slatt\source\repos\Heat\Heat\obj\Debug\Heat.csproj.AssemblyReference.cache
+C:\Users\slatt\source\repos\Heat\Heat\obj\Debug\Heat.csproj.CoreCompileInputs.cache
+C:\Users\slatt\source\repos\Heat\Heat\obj\Debug\Heat.csproj.Up2Date
+C:\Users\slatt\source\repos\Heat\Heat\obj\Debug\Heat.dll
+C:\Users\slatt\source\repos\Heat\Heat\obj\Debug\Heat.pdb
