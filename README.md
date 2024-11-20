@@ -1,12 +1,12 @@
 # Heat
 [![Pic1](https://cdn.theasc.com/_800x418_crop_center-center_82_none/Heat-Shootout-Featured.jpg?mtime=1720478474)](https://cdn.theasc.com/_800x418_crop_center-center_82_none/Heat-Shootout-Featured.jpg?mtime=1720478474)
 
-> Equip primary weapon while sprinting
-
 ![](https://img.shields.io/github/last-commit/aleur/Heat)
 
 ![](https://img.shields.io/github/commit-activity/w/aleur/Heat)
-
+## Features
+- Equip primary weapon while sprinting
+- Equip Mask, Glasses, Hat with Anims
 ## Installation
 - Place Heat.dll in scripts folder
 
