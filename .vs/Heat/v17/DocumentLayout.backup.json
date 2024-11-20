@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\slatt\\source\\repos\\Heat\\",
+  "WorkspaceRootPath": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\source\\repos\\heat\\heat\\heat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\heat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\heat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -24,11 +24,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Heat.cs",
-              "DocumentMoniker": "C:\\Users\\slatt\\source\\repos\\Heat\\Heat\\Heat.cs",
+              "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Heat.cs",
               "RelativeDocumentMoniker": "Heat\\Heat.cs",
-              "ToolTip": "C:\\Users\\slatt\\source\\repos\\Heat\\Heat\\Heat.cs",
+              "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Heat.cs",
               "RelativeToolTip": "Heat\\Heat.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAcwBwAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAcBAAAAAAAAAAAcwBkBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-17T20:30:49.619Z",
               "EditorCaption": ""

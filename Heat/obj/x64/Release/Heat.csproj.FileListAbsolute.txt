@@ -1,0 +1,6 @@
+C:\Program Files (x86)\Steam\steamapps\common\Grand Theft Auto V\scripts\Heat.dll
+C:\Program Files (x86)\Steam\steamapps\common\Grand Theft Auto V\scripts\Heat.pdb
+C:\Users\slatt\Documents\GitHub\Heat\Heat\obj\x64\Release\Heat.csproj.AssemblyReference.cache
+C:\Users\slatt\Documents\GitHub\Heat\Heat\obj\x64\Release\Heat.csproj.CoreCompileInputs.cache
+C:\Users\slatt\Documents\GitHub\Heat\Heat\obj\x64\Release\Heat.dll
+C:\Users\slatt\Documents\GitHub\Heat\Heat\obj\x64\Release\Heat.pdb

@@ -8,3 +8,15 @@ C:\Users\slatt\source\repos\Heat\Heat\obj\x64\Debug\Heat.pdb
 C:\Users\slatt\source\repos\Heat\Heat\bin\x64\Debug\ScriptHookVDotNet2.dll
 C:\Users\slatt\source\repos\Heat\Heat\bin\x64\Debug\ScriptHookVDotNet2.pdb
 C:\Users\slatt\source\repos\Heat\Heat\bin\x64\Debug\ScriptHookVDotNet2.xml
+C:\Users\slatt\Documents\GitHub\Heat\Heat\bin\x64\Debug\Heat.dll
+C:\Users\slatt\Documents\GitHub\Heat\Heat\bin\x64\Debug\Heat.pdb
+C:\Users\slatt\Documents\GitHub\Heat\Heat\bin\x64\Debug\ScriptHookVDotNet2.dll
+C:\Users\slatt\Documents\GitHub\Heat\Heat\bin\x64\Debug\ScriptHookVDotNet2.pdb
+C:\Users\slatt\Documents\GitHub\Heat\Heat\bin\x64\Debug\ScriptHookVDotNet2.xml
+C:\Users\slatt\Documents\GitHub\Heat\Heat\obj\x64\Debug\Heat.csproj.AssemblyReference.cache
+C:\Users\slatt\Documents\GitHub\Heat\Heat\obj\x64\Debug\Heat.csproj.CoreCompileInputs.cache
+C:\Users\slatt\Documents\GitHub\Heat\Heat\obj\x64\Debug\Heat.csproj.Up2Date
+C:\Users\slatt\Documents\GitHub\Heat\Heat\obj\x64\Debug\Heat.dll
+C:\Users\slatt\Documents\GitHub\Heat\Heat\obj\x64\Debug\Heat.pdb
+C:\Program Files (x86)\Steam\steamapps\common\Grand Theft Auto V\scripts\Heat.dll
+C:\Program Files (x86)\Steam\steamapps\common\Grand Theft Auto V\scripts\Heat.pdb
