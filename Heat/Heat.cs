@@ -9,11 +9,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Policy;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 public class Heat : Script
 {
     public ScriptSettings Config;
     private List<WeaponHash> weaponList = new List<WeaponHash>();
+    private List<int[]> bagList = new List<int[]>();
 
     private int equipDelay = 1000;
     private int lastSprintedTime = 0;
@@ -51,6 +53,18 @@ public class Heat : Script
                     weaponList.Add((WeaponHash)weaponHash);
                 }
             }
+
+            string[] bags = Config.GetAllValues("BAGS", "BAG");
+            foreach (var bag in bags)
+            {
+                string[] parts = bag.Split(',');
+                if (int.TryParse(parts[0].Trim(), out int componentID) && int.TryParse(parts[1].Trim(), out int textureID))
+                {
+                    int[] bagID = { componentID, textureID };
+                    bagList.Add(bagID);
+                }
+            }
+
             UI.Notify("~r~Heat~s~: Loaded " + weaponList.Count + " weapons from " + iniFile);
         }
         catch (Exception ex)
@@ -106,21 +120,33 @@ public class Heat : Script
             writer.WriteLine("HASH=1305664598");
             writer.WriteLine("HASH=1119849093");
             writer.WriteLine("HASH=1834241177");
+            writer.WriteLine("HASH=3347935668"); 
             writer.WriteLine("[SETTINGS]");
             writer.WriteLine($"EquipDelay={equipDelay}");
             writer.WriteLine($"EquipMaskKey={equipMaskKey}");
             writer.WriteLine($"EquipHatKey={equipHatKey}");
             writer.WriteLine($"EquipGlassesKey={equipGlassesKey}");
+            writer.WriteLine("[BAGS]");
+            writer.WriteLine("BAG=41,40");
+            writer.WriteLine("BAG=45,44");
+            writer.WriteLine("BAG=82,81");
+            writer.WriteLine("BAG=86,85");
         }
         UI.Notify("~g~Default configuration created: " + iniFile);
     }
     private void OnTick(object sender, EventArgs e)
     {
-        if (Game.Player.Character.IsInVehicle() || !Game.Player.Character.IsAlive)
-            return;
+        Ped playerPed = Game.Player.Character;
+        int bagComponent = GetComponentVariation(playerPed, 5);
 
+        int[] equippedBag = bagList.FirstOrDefault(bag => bag[0] == bagComponent || bag[1] == bagComponent);
+        if (playerPed.IsInVehicle() || !playerPed.IsAlive) { return; }
+
+        WeaponHash currentWeapon = Game.Player.Character.Weapons.Current.Hash;
         bool isSprinting = IsPlayerSprinting();
+        bool isBagEquipped = IsBagEquipped(Game.Player.Character);
 
+        /*
         if (isSprinting)
         {
             if (Game.GameTime - lastSprintedTime >= equipDelay)
@@ -130,6 +156,40 @@ public class Heat : Script
                 {
                     EquipAppropriateWeapon();
                     lastSprintedTime = Game.GameTime;
+                }
+            }
+        }; 
+        */
+        if (HasPrimaryWeapons(playerPed))
+        {
+            if (isBagEquipped)
+            {
+                if (HasBagEquipped(playerPed))
+                {
+                    if (currentWeapon != weaponList.FirstOrDefault(weaponHash => weaponHash == currentWeapon))
+                    {
+                        if (bagComponent == equippedBag[1])
+                        {
+                            Wait(150);
+                            SetComponentVariation(playerPed, 5, equippedBag[0], 0, 0);
+                        }
+                    }
+                    else
+                    {
+                        if (bagComponent == equippedBag[0])
+                        {
+                            Wait(150);
+                            SetComponentVariation(playerPed, 5, equippedBag[1], 0, 0);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (currentWeapon != weaponList.FirstOrDefault(weaponHash => weaponHash == currentWeapon))
+                {
+                    // If player has primary weapon, but no bag, equip primary weapon.
+                    EquipAppropriateWeapon();
                 }
             }
         }
@@ -201,13 +261,16 @@ public class Heat : Script
 
     private bool IsPlayerSprinting()
     {
-        // Check if the player is sprinting (not just running)
         return Game.Player.Character.IsSprinting;
     }
 
     private bool IsPrimaryWeapon(WeaponHash weaponHash)
     {
         return weaponList.Contains(weaponHash);
+    }
+    private bool HasPrimaryWeapons(Ped playerPed)
+    {
+        return weaponList.Any(weaponHash => playerPed.Weapons.HasWeapon(weaponHash));
     }
 
     private void EquipAppropriateWeapon()
@@ -364,5 +427,14 @@ public class Heat : Script
     private void SetComponentVariation(Ped playerPed, int componentId, int drawableId, int textureId, int paletteId)
     {
         Function.Call(GTA.Native.Hash.SET_PED_COMPONENT_VARIATION, playerPed, componentId, drawableId, textureId, paletteId);
+    }
+
+    private bool IsBagEquipped(Ped playerPed)
+    {
+        return Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5) != 0;
+    }
+    private bool HasBagEquipped(Ped playerPed)
+    {
+        return bagList.Any(bag => bag[0] == Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5)) || bagList.Any(bag => bag[1] == Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5));
     }
 }
