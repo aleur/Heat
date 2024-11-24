@@ -16,6 +16,7 @@ public class Heat : Script
     public ScriptSettings Config;
     private List<WeaponHash> weaponList = new List<WeaponHash>();
     private List<int[]> bagList = new List<int[]>();
+    private string currentAnim, currentDict;
 
     private int equipDelay = 1000;
     private int lastSprintedTime = 0;
@@ -197,17 +198,20 @@ public class Heat : Script
 
     private void OnKeyUp(object sender, KeyEventArgs e)
     {
-        if (e.KeyCode == equipMaskKey)
+        if (!isAnimPlaying())
         {
-            ToggleMask();
-        }
-        else if (e.KeyCode == equipHatKey)
-        {
-            ToggleHat();
-        }
-        else if (e.KeyCode == equipGlassesKey)
-        {
-            ToggleGlasses();
+            if (e.KeyCode == equipMaskKey)
+            {
+                ToggleMask();
+            }
+            else if (e.KeyCode == equipHatKey)
+            {
+                ToggleHat();
+            }
+            else if (e.KeyCode == equipGlassesKey)
+            {
+                ToggleGlasses();
+            }
         }
     }
 
@@ -299,6 +303,8 @@ public class Heat : Script
                 Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
             }
             Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1200, 49, 0, 0, 0, 0);
+            currentAnim = animName;
+            currentDict = animDict;
             Wait(800);
 
             maskComponent = GetComponentVariation(playerPed, 1);
@@ -320,6 +326,8 @@ public class Heat : Script
                 Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
             }
             Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 750, 49, 0, 0, 0, 0);
+            currentAnim = animName;
+            currentDict = animDict;
             Wait(350);
 
             SetComponentVariation(playerPed, 1, maskComponent, maskTexture, 0);
@@ -335,9 +343,11 @@ public class Heat : Script
 
             if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
             {
-                Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
+                Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict); 
             }
-            Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
+            Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1200, 49, 0, 0, 0, 0);
+            currentAnim = animName;
+            currentDict = animDict;
             Wait(1200);
 
             hatComponent = GetPropVariation(playerPed, 0);
@@ -359,6 +369,8 @@ public class Heat : Script
                 Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
             }
             Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
+            currentAnim = animName;
+            currentDict = animDict;
             Wait(1700);
 
             SetPropVariation(playerPed, 0, hatComponent, hatTexture, true);
@@ -377,7 +389,9 @@ public class Heat : Script
                 Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
             }
             Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1500, 49, 0, 0, 0, 0);
-            Wait(1100);
+            currentAnim = animName;
+            currentDict = animDict;
+            Wait(1300);
 
             glassesComponent = GetPropVariation(playerPed, 1);
             glassesTexture = GetPropTextureVariation(playerPed, 1);
@@ -398,7 +412,9 @@ public class Heat : Script
                 Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
             }
             Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
-            Wait(1200);
+            currentAnim = animName;
+            currentDict = animDict;
+            Wait(1500);
 
             SetPropVariation(playerPed, 1, glassesComponent, glassesTexture, true);
         }
@@ -436,5 +452,10 @@ public class Heat : Script
     private bool HasBagEquipped(Ped playerPed)
     {
         return bagList.Any(bag => bag[0] == Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5)) || bagList.Any(bag => bag[1] == Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5));
+    }
+    
+    private bool isAnimPlaying()
+    {
+        return Function.Call<bool>(GTA.Native.Hash.IS_ENTITY_PLAYING_ANIM, Game.Player.Character, currentDict, currentAnim, 3);
     }
 }
