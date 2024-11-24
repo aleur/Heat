@@ -5,7 +5,9 @@
 
 ![](https://img.shields.io/github/commit-activity/w/aleur/Heat)
 ## Features
-- Equip primary weapon while sprinting
+- Bag System
+  - If player has bag, player can store primary weapons
+  - If not, they can't deposit their weapons
 - Equip Mask, Glasses, Hat with Anims
 ## Installation
 - Place Heat.dll in scripts folder
