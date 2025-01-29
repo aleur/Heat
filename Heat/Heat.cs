@@ -141,125 +141,114 @@ public class Heat : Script
         int bagComponent = GetComponentVariation(playerPed, 5);
 
         int[] equippedBag = bagList.FirstOrDefault(bag => bag[0] == bagComponent || bag[1] == bagComponent);
-        if (playerPed.IsInVehicle() || !playerPed.IsAlive) { return; }
+        if (playerPed.IsInVehicle() || !playerPed.IsAlive)
+            return;
 
         WeaponHash currentWeapon = Game.Player.Character.Weapons.Current.Hash;
         bool isSprinting = IsPlayerSprinting();
         bool isBagEquipped = IsBagEquipped(Game.Player.Character);
 
-        /*
-        if (isSprinting)
+        if (!HasPrimaryWeapons(playerPed) || isAnimPlaying())
+            return;
+
+        // Force player to equip weapon if bag not equipped
+        if (!isBagEquipped)
         {
-            if (Game.GameTime - lastSprintedTime >= equipDelay)
+            if (currentWeapon != weaponList.FirstOrDefault(weaponHash => weaponHash == currentWeapon))
             {
-                WeaponHash currentWeapon = Game.Player.Character.Weapons.Current.Hash;
-                if (!IsPrimaryWeapon(currentWeapon))
-                {
-                    EquipAppropriateWeapon();
-                    lastSprintedTime = Game.GameTime;
-                }
+                // If player has primary weapon, but no bag, equip primary weapon.
+                EquipAppropriateWeapon();
             }
-        }; 
-        */
-        if (HasPrimaryWeapons(playerPed))
+            return;
+        }
+
+        // Bag not recognized, exit method
+        if (!HasConfigBagEquipped(playerPed))
+            return;
+
+        // Bag states - open/closed
+        if (currentWeapon != weaponList.FirstOrDefault(weaponHash => weaponHash == currentWeapon))
         {
-            if (isBagEquipped)
+            if (bagComponent == equippedBag[1])
             {
-                if (HasBagEquipped(playerPed))
-                {
-                    if (currentWeapon != weaponList.FirstOrDefault(weaponHash => weaponHash == currentWeapon))
-                    {
-                        if (bagComponent == equippedBag[1])
-                        {
-                            Wait(150);
-                            SetComponentVariation(playerPed, 5, equippedBag[0], 0, 0);
-                        }
-                    }
-                    else
-                    {
-                        if (bagComponent == equippedBag[0])
-                        {
-                            Wait(150);
-                            SetComponentVariation(playerPed, 5, equippedBag[1], 0, 0);
-                        }
-                    }
-                }
+                Wait(150);
+                SetComponentVariation(playerPed, 5, equippedBag[0], 0, 0);
             }
-            else
+        }
+        else
+        {
+            if (bagComponent == equippedBag[0])
             {
-                if (currentWeapon != weaponList.FirstOrDefault(weaponHash => weaponHash == currentWeapon))
-                {
-                    // If player has primary weapon, but no bag, equip primary weapon.
-                    EquipAppropriateWeapon();
-                }
+                Wait(150);
+                SetComponentVariation(playerPed, 5, equippedBag[1], 0, 0);
             }
         }
     }
 
     private void OnKeyUp(object sender, KeyEventArgs e)
     {
-        if (!isAnimPlaying())
+        if (isAnimPlaying())
+            return;
+
+        if (e.KeyCode == equipMaskKey)
         {
-            if (e.KeyCode == equipMaskKey)
-            {
-                ToggleMask();
-            }
-            else if (e.KeyCode == equipHatKey)
-            {
-                ToggleHat();
-            }
-            else if (e.KeyCode == equipGlassesKey)
-            {
-                ToggleGlasses();
-            }
+            ToggleMask();
+        }
+        else if (e.KeyCode == equipHatKey)
+        {
+            ToggleHat();
+        }
+        else if (e.KeyCode == equipGlassesKey)
+        {
+            ToggleGlasses();
         }
     }
 
     private void ToggleMask()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed != null)
+
+        if (playerPed == null)
+            return;
+
+        if (GetComponentVariation(playerPed, 1) == 0 && maskComponent != 0)
         {
-            if (GetComponentVariation(playerPed, 1) == 0 && maskComponent != 0)
-            {
-                EquipMask();
-            }
-            else if(GetComponentVariation(playerPed, 1) != 0)
-            {
-                UnequipMask();
-            }
+            EquipMask();
+        }
+        else if (GetComponentVariation(playerPed, 1) != 0)
+        {
+            UnequipMask();
         }
     }
 
     private void ToggleHat()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed != null)
+        if (playerPed == null)
+            return;
+        if (GetPropVariation(playerPed, 0) == -1 && hatComponent != -1)
         {
-            if (GetPropVariation(playerPed, 0) == -1 && hatComponent != -1)
-            {
-                EquipHat();
-            }
-            else if (GetPropVariation(playerPed, 0) != -1)
-            {
-                UnequipHat();
-            }
+            EquipHat();
+        }
+        else if (GetPropVariation(playerPed, 0) != -1)
+        {
+            UnequipHat();
         }
     }
 
     private void ToggleGlasses()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed != null)
+        if (playerPed == null)
+            return;
+
+        if (GetPropVariation(playerPed, 1) == -1 && glassesComponent != -1)
         {
-            if (GetPropVariation(playerPed, 1) == -1 && glassesComponent != -1)
-            {
-                EquipGlasses();
-            }
-            else if (GetPropVariation(playerPed, 1) != -1)
-            {
-                UnequipGlasses();
-            }
+            EquipGlasses();
+        }
+        else if (GetPropVariation(playerPed, 1) != -1)
+        {
+            UnequipGlasses();
         }
     }
 
@@ -293,131 +282,128 @@ public class Heat : Script
     private void UnequipMask()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed != null)
+        if (playerPed == null)
+            return;
+        string animDict = "missfbi4";
+        string animName = "takeoff_mask";
+
+        if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
         {
-            string animDict = "missfbi4";
-            string animName = "takeoff_mask";
-
-            if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
-            {
-                Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
-            }
-            Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1200, 49, 0, 0, 0, 0);
-            currentAnim = animName;
-            currentDict = animDict;
-            Wait(800);
-
-            maskComponent = GetComponentVariation(playerPed, 1);
-            maskTexture = GetComponentTextureVariation(playerPed, 1);
-
-            SetComponentVariation(playerPed, 1, 0, 0, 0);
+            Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
         }
+        Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1200, 49, 0, 0, 0, 0);
+        currentAnim = animName;
+        currentDict = animDict;
+        //Wait(800);
+        //while (isAnimPlaying()) Yield();
+
+        maskComponent = GetComponentVariation(playerPed, 1);
+        maskTexture = GetComponentTextureVariation(playerPed, 1);
+
+        SetComponentVariation(playerPed, 1, 0, 0, 0);
     }
     private void EquipMask()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed != null)
-        {
-            string animDict = "mp_masks@on_foot";
-            string animName = "put_on_mask";
+        if (playerPed == null)
+            return;
 
-            if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
-            {
-                Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
-            }
-            Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 750, 49, 0, 0, 0, 0);
-            currentAnim = animName;
-            currentDict = animDict;
-            Wait(350);
+        string animDict = "mp_masks@on_foot";
+        string animName = "put_on_mask";
 
-            SetComponentVariation(playerPed, 1, maskComponent, maskTexture, 0);
-        }
+        if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
+            Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
+
+        Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 750, 49, 0, 0, 0, 0);
+        currentAnim = animName;
+        currentDict = animDict;
+        //Wait(350);
+        //while (isAnimPlaying()) Yield();
+
+        SetComponentVariation(playerPed, 1, maskComponent, maskTexture, 0);
     }
     private void UnequipHat()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed != null)
-        {
-            string animDict = "veh@common@fp_helmet@";
-            string animName = "take_off_helmet_stand";
+        if (playerPed == null)
+            return;
+        string animDict = "veh@common@fp_helmet@";
+        string animName = "take_off_helmet_stand";
 
-            if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
-            {
-                Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict); 
-            }
-            Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1200, 49, 0, 0, 0, 0);
-            currentAnim = animName;
-            currentDict = animDict;
-            Wait(1200);
+        if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
+            Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
 
-            hatComponent = GetPropVariation(playerPed, 0);
-            hatTexture = GetPropTextureVariation(playerPed, 0);
+        Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1200, 49, 0, 0, 0, 0);
+        currentAnim = animName;
+        currentDict = animDict;
+        //Wait(1200);
+        //while (isAnimPlaying()) Yield();
 
-            Function.Call(GTA.Native.Hash.CLEAR_PED_PROP, playerPed, 0);
-        }
+        hatComponent = GetPropVariation(playerPed, 0);
+        hatTexture = GetPropTextureVariation(playerPed, 0);
+
+        Function.Call(GTA.Native.Hash.CLEAR_PED_PROP, playerPed, 0);
     }
     private void EquipHat()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed != null)
-        {
-            string animDict = "missheistdockssetup1hardhat@";
-            string animName = "put_on_hat";
+        if (playerPed == null)
+            return;
+        string animDict = "missheistdockssetup1hardhat@";
+        string animName = "put_on_hat";
 
-            if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
-            {
-                Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
-            }
-            Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
-            currentAnim = animName;
-            currentDict = animDict;
-            Wait(1700);
+        if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
+            Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
 
-            SetPropVariation(playerPed, 0, hatComponent, hatTexture, true);
-        }
+        Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
+        currentAnim = animName;
+        currentDict = animDict;
+        //Wait(1700);
+        //while (isAnimPlaying()) Yield();
+
+        SetPropVariation(playerPed, 0, hatComponent, hatTexture, true);
     }
     private void UnequipGlasses()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed != null)
-        {
-            string animDict = "clothingspecs";
-            string animName = "take_off";
+        if (playerPed == null)
+            return;
+        string animDict = "clothingspecs";
+        string animName = "take_off";
 
-            if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
-            {
-                Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
-            }
-            Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1500, 49, 0, 0, 0, 0);
-            currentAnim = animName;
-            currentDict = animDict;
-            Wait(1300);
+        if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
+            Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
 
-            glassesComponent = GetPropVariation(playerPed, 1);
-            glassesTexture = GetPropTextureVariation(playerPed, 1);
+        Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1500, 49, 0, 0, 0, 0);
+        currentAnim = animName;
+        currentDict = animDict;
+        //Wait(1300);
+        //while (isAnimPlaying()) Yield();
 
-            Function.Call(GTA.Native.Hash.CLEAR_PED_PROP, playerPed, 1);
-        }
+        glassesComponent = GetPropVariation(playerPed, 1);
+        glassesTexture = GetPropTextureVariation(playerPed, 1);
+
+        Function.Call(GTA.Native.Hash.CLEAR_PED_PROP, playerPed, 1);
     }
     private void EquipGlasses()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed != null)
-        {
-            string animDict = "clothingspecs";
-            string animName = "try_glasses_negative_b";
+        if (playerPed == null)
+            return;
 
-            if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
-            {
-                Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
-            }
-            Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
-            currentAnim = animName;
-            currentDict = animDict;
-            Wait(1500);
+        string animDict = "clothingspecs";
+        string animName = "try_glasses_negative_b";
 
-            SetPropVariation(playerPed, 1, glassesComponent, glassesTexture, true);
-        }
+        if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
+            Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
+
+        Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
+        currentAnim = animName;
+        currentDict = animDict;
+        //Wait(1500);
+        //while (isAnimPlaying()) Yield();
+
+        SetPropVariation(playerPed, 1, glassesComponent, glassesTexture, true);
     }
 
     private int GetPropVariation(Ped playerPed, int componentId)
@@ -449,7 +435,7 @@ public class Heat : Script
     {
         return Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5) != 0;
     }
-    private bool HasBagEquipped(Ped playerPed)
+    private bool HasConfigBagEquipped(Ped playerPed)
     {
         return bagList.Any(bag => bag[0] == Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5)) || bagList.Any(bag => bag[1] == Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5));
     }
