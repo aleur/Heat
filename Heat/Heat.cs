@@ -10,6 +10,8 @@ using System.Diagnostics;
 using System.Security.Policy;
 using System.Windows.Forms;
 using System.ComponentModel;
+using static System.Collections.Specialized.BitVector32;
+using System.Media;
 
 public class Heat : Script
 {
@@ -18,6 +20,7 @@ public class Heat : Script
     private List<int[]> bagList = new List<int[]>();
     private string currentAnim, currentDict;
 
+    private bool IsReloadDisabled = false;
     private int equipDelay = 1000;
     private int lastSprintedTime = 0;
     private int hatComponent = -1, hatTexture = -1, maskComponent = 0, maskTexture = -1, glassesComponent = -1, glassesTexture = -1;
@@ -26,9 +29,15 @@ public class Heat : Script
 
     public Heat()
     {
-        Tick += OnTick;
-        LoadIniFile("scripts//Heat.ini");
-        KeyUp += OnKeyUp;
+        Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, true); //doesn't do shit
+        Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, true);
+        Tick += BagSystem;
+        Tick += DisableAutoReload;
+
+        LoadIniFile("scripts//Heat//Heat.ini");
+
+        KeyUp += ToggleClothing;
+        KeyUp += ManualReload;
     }
 
     public void LoadIniFile(string iniFile)
@@ -135,7 +144,7 @@ public class Heat : Script
         }
         UI.Notify("~g~Default configuration created: " + iniFile);
     }
-    private void OnTick(object sender, EventArgs e)
+    private void BagSystem(object sender, EventArgs e)
     {
         Ped playerPed = Game.Player.Character;
         int bagComponent = GetComponentVariation(playerPed, 5);
@@ -184,11 +193,51 @@ public class Heat : Script
             }
         }
     }
-
-    private void OnKeyUp(object sender, KeyEventArgs e)
+    private void DisableAutoReload(object sender, EventArgs e)
     {
-        if (isAnimPlaying())
+        // Doesn't work for vehicles
+
+        // Get the player and their current weapon
+        Ped player = Game.Player.Character;
+        Weapon currentWeapon = player.Weapons.Current;
+
+        // Check if the player is holding a weapon
+        if (currentWeapon == null || currentWeapon.Hash == WeaponHash.Unarmed)
             return;
+
+        if (currentWeapon.AmmoInClip == 1)
+        {
+            Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, false); // keys are inconsistent
+            Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, false);
+            IsReloadDisabled = true;
+
+            if (Game.IsControlPressed(0, GTA.Control.Aim) && (Game.IsControlJustReleased(0, GTA.Control.Attack) || Game.IsControlJustReleased(0, GTA.Control.Attack2)))
+            {
+                if (IsPrimaryWeapon(player.Weapons.Current.Hash)) PlaySound("weap_dryfire_rifle.wav");
+                else PlaySound("weap_dryfire_smg.wav");
+            }
+        } else
+        {
+            IsReloadDisabled = false;
+        }
+    }
+    private void ManualReload(object sender, KeyEventArgs e)
+    {
+        Ped player = Game.Player.Character;
+        Weapon currentWeapon = player.Weapons.Current;
+
+        if (currentWeapon.AmmoInClip != 1) return;
+        if (e.KeyCode == (Keys)GTA.Control.Reload)
+        {
+            Function.Call(GTA.Native.Hash.ENABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, true);// THIS SHIT DOESN TDO AW IAW HRTIAW
+            Function.Call(GTA.Native.Hash.ENABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, true);
+            IsReloadDisabled = false;
+        }
+    }
+
+    private void ToggleClothing(object sender, KeyEventArgs e)
+    {
+        if (isAnimPlaying()) return;
 
         if (e.KeyCode == equipMaskKey)
         {
@@ -202,6 +251,14 @@ public class Heat : Script
         {
             ToggleGlasses();
         }
+    }
+    private void PlaySound(string fileName)
+    {
+        string filePath = $"scripts//Heat//{fileName}";
+        if (!File.Exists(filePath)) return;
+
+        SoundPlayer sfxPlayer = new SoundPlayer(filePath);
+        sfxPlayer.Play(); // Use PlaySync() to wait until it finishes
     }
 
     private void ToggleMask()
@@ -294,8 +351,7 @@ public class Heat : Script
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1200, 49, 0, 0, 0, 0);
         currentAnim = animName;
         currentDict = animDict;
-        //Wait(800);
-        //while (isAnimPlaying()) Yield();
+        Wait(800);
 
         maskComponent = GetComponentVariation(playerPed, 1);
         maskTexture = GetComponentTextureVariation(playerPed, 1);
@@ -308,7 +364,7 @@ public class Heat : Script
         if (playerPed == null)
             return;
 
-        string animDict = "mp_masks@on_foot";
+        string animDict = playerPed.IsInVehicle() ? "mp_masks@standard_car@ds@" : "mp_masks@on_foot";
         string animName = "put_on_mask";
 
         if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, animDict))
@@ -317,8 +373,7 @@ public class Heat : Script
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 750, 49, 0, 0, 0, 0);
         currentAnim = animName;
         currentDict = animDict;
-        //Wait(350);
-        //while (isAnimPlaying()) Yield();
+        Wait(350);
 
         SetComponentVariation(playerPed, 1, maskComponent, maskTexture, 0);
     }
@@ -336,8 +391,7 @@ public class Heat : Script
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1200, 49, 0, 0, 0, 0);
         currentAnim = animName;
         currentDict = animDict;
-        //Wait(1200);
-        //while (isAnimPlaying()) Yield();
+        Wait(1200);
 
         hatComponent = GetPropVariation(playerPed, 0);
         hatTexture = GetPropTextureVariation(playerPed, 0);
@@ -358,8 +412,7 @@ public class Heat : Script
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
         currentAnim = animName;
         currentDict = animDict;
-        //Wait(1700);
-        //while (isAnimPlaying()) Yield();
+        Wait(1700);
 
         SetPropVariation(playerPed, 0, hatComponent, hatTexture, true);
     }
@@ -377,8 +430,7 @@ public class Heat : Script
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1500, 49, 0, 0, 0, 0);
         currentAnim = animName;
         currentDict = animDict;
-        //Wait(1300);
-        //while (isAnimPlaying()) Yield();
+        Wait(1300);
 
         glassesComponent = GetPropVariation(playerPed, 1);
         glassesTexture = GetPropTextureVariation(playerPed, 1);
@@ -400,8 +452,7 @@ public class Heat : Script
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
         currentAnim = animName;
         currentDict = animDict;
-        //Wait(1500);
-        //while (isAnimPlaying()) Yield();
+        Wait(1500);
 
         SetPropVariation(playerPed, 1, glassesComponent, glassesTexture, true);
     }
