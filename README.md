@@ -9,6 +9,8 @@
   - If player has bag, player can store primary weapons
   - If not, they can't deposit their weapons
 - Equip Mask, Glasses, Hat with Anims
+- Disabled Auto-Reload
+  - Dryfire implemented
 ## Installation
 - Place Heat.dll in scripts folder
 
