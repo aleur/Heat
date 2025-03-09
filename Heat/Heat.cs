@@ -17,11 +17,12 @@ public class Heat : Script
 {
     public ScriptSettings Config;
     private List<WeaponHash> weaponList = new List<WeaponHash>();
+    private List<WeaponHash> exemptionList = new List<WeaponHash>();
     private List<int[]> bagList = new List<int[]>();
     private string currentAnim, currentDict;
+    private bool IsLButtonDisabled = false;
 
-    private bool IsReloadDisabled = false;
-    private int equipDelay = 1000;
+    private String isDryfireToggled = "True";
     private int lastSprintedTime = 0;
     private int hatComponent = -1, hatTexture = -1, maskComponent = 0, maskTexture = -1, glassesComponent = -1, glassesTexture = -1;
 
@@ -29,15 +30,12 @@ public class Heat : Script
 
     public Heat()
     {
-        Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, true); //doesn't do shit
-        Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, true);
-        Tick += BagSystem;
-        Tick += DisableAutoReload;
-
         LoadIniFile("scripts//Heat//Heat.ini");
+        Tick += BagSystem;
+
+        if (isDryfireToggled.Equals("True")) Tick += Dryfire;
 
         KeyUp += ToggleClothing;
-        KeyUp += ManualReload;
     }
 
     public void LoadIniFile(string iniFile)
@@ -49,7 +47,7 @@ public class Heat : Script
         try
         {
             Config = ScriptSettings.Load(iniFile);
-            equipDelay = Config.GetValue("SETTINGS", "EquipDelay", equipDelay);
+            isDryfireToggled = Config.GetValue("SETTINGS", "EnableDryfire", isDryfireToggled);
             equipMaskKey = Config.GetValue("SETTINGS", "EquipMaskKey", equipMaskKey);
             equipHatKey = Config.GetValue("SETTINGS", "EquipHatKey", equipHatKey);
             equipGlassesKey = Config.GetValue("SETTINGS", "EquipGlassesKey", equipGlassesKey);
@@ -72,6 +70,15 @@ public class Heat : Script
                 {
                     int[] bagID = { componentID, textureID };
                     bagList.Add(bagID);
+                }
+            }
+
+            string[] exemptions = Config.GetAllValues("EXEMPTIONS", "HASH");
+            foreach (var exemption in exemptions)
+            {
+                if (uint.TryParse(exemption.Trim(), out uint weaponHash))
+                {
+                    exemptionList.Add((WeaponHash)weaponHash);
                 }
             }
 
@@ -132,7 +139,7 @@ public class Heat : Script
             writer.WriteLine("HASH=1834241177");
             writer.WriteLine("HASH=3347935668"); 
             writer.WriteLine("[SETTINGS]");
-            writer.WriteLine($"EquipDelay={equipDelay}");
+            writer.WriteLine($"EnableDryfire={isDryfireToggled}");
             writer.WriteLine($"EquipMaskKey={equipMaskKey}");
             writer.WriteLine($"EquipHatKey={equipHatKey}");
             writer.WriteLine($"EquipGlassesKey={equipGlassesKey}");
@@ -141,6 +148,15 @@ public class Heat : Script
             writer.WriteLine("BAG=45,44");
             writer.WriteLine("BAG=82,81");
             writer.WriteLine("BAG=86,85");
+            writer.WriteLine("[EXEMPTIONS]");
+            writer.WriteLine("HASH=2828843422");
+            writer.WriteLine("HASH=911657153");
+            writer.WriteLine("HASH=125959754");
+            writer.WriteLine("HASH=1198879012");
+            writer.WriteLine("HASH=1834241177");
+            writer.WriteLine("HASH=2982836145"); 
+            writer.WriteLine("HASH=2939590305");
+            writer.WriteLine("HASH=3696079510");
         }
         UI.Notify("~g~Default configuration created: " + iniFile);
     }
@@ -193,7 +209,7 @@ public class Heat : Script
             }
         }
     }
-    private void DisableAutoReload(object sender, EventArgs e)
+    private void Dryfire(object sender, EventArgs e)
     {
         // Doesn't work for vehicles
 
@@ -202,36 +218,25 @@ public class Heat : Script
         Weapon currentWeapon = player.Weapons.Current;
 
         // Check if the player is holding a weapon
-        if (currentWeapon == null || currentWeapon.Hash == WeaponHash.Unarmed)
-            return;
-
-        if (currentWeapon.AmmoInClip == 1)
+        if (currentWeapon == null || currentWeapon.Hash == WeaponHash.Unarmed || IsWeaponExempted(currentWeapon.Hash) || IsThrowable(currentWeapon.Hash) || currentWeapon.AmmoInClip != 1)
         {
-            Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, false); // keys are inconsistent
-            Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, false);
-            IsReloadDisabled = true;
-
-            if (Game.IsControlPressed(0, GTA.Control.Aim) && (Game.IsControlJustReleased(0, GTA.Control.Attack) || Game.IsControlJustReleased(0, GTA.Control.Attack2)))
+            if (IsLButtonDisabled)
             {
-                if (IsPrimaryWeapon(player.Weapons.Current.Hash)) PlaySound("weap_dryfire_rifle.wav");
-                else PlaySound("weap_dryfire_smg.wav");
+                Function.Call(GTA.Native.Hash.ENABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, true);
+                Function.Call(GTA.Native.Hash.ENABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, true);
+                IsLButtonDisabled = false;
             }
-        } else
-        {
-            IsReloadDisabled = false;
+            return;
         }
-    }
-    private void ManualReload(object sender, KeyEventArgs e)
-    {
-        Ped player = Game.Player.Character;
-        Weapon currentWeapon = player.Weapons.Current;
 
-        if (currentWeapon.AmmoInClip != 1) return;
-        if (e.KeyCode == (Keys)GTA.Control.Reload)
+        Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, false); // keys are inconsistent
+        Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, false);
+        IsLButtonDisabled = true;
+
+        if (Game.IsControlPressed(0, GTA.Control.Aim) && (Game.IsControlJustReleased(0, GTA.Control.Attack) || Game.IsControlJustReleased(0, GTA.Control.Attack2)))
         {
-            Function.Call(GTA.Native.Hash.ENABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, true);// THIS SHIT DOESN TDO AW IAW HRTIAW
-            Function.Call(GTA.Native.Hash.ENABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, true);
-            IsReloadDisabled = false;
+            if (IsPrimaryWeapon(player.Weapons.Current.Hash)) PlaySound("weap_dryfire_rifle.wav");
+            else PlaySound("weap_dryfire_smg.wav");
         }
     }
 
@@ -251,14 +256,6 @@ public class Heat : Script
         {
             ToggleGlasses();
         }
-    }
-    private void PlaySound(string fileName)
-    {
-        string filePath = $"scripts//Heat//{fileName}";
-        if (!File.Exists(filePath)) return;
-
-        SoundPlayer sfxPlayer = new SoundPlayer(filePath);
-        sfxPlayer.Play(); // Use PlaySync() to wait until it finishes
     }
 
     private void ToggleMask()
@@ -456,7 +453,14 @@ public class Heat : Script
 
         SetPropVariation(playerPed, 1, glassesComponent, glassesTexture, true);
     }
+    private void PlaySound(string fileName)
+    {
+        string filePath = $"scripts//Heat//{fileName}";
+        if (!File.Exists(filePath)) return;
 
+        SoundPlayer sfxPlayer = new SoundPlayer(filePath);
+        sfxPlayer.Play(); // Use PlaySync() to wait until it finishes
+    }
     private int GetPropVariation(Ped playerPed, int componentId)
     {
         return Function.Call<int>(GTA.Native.Hash.GET_PED_PROP_INDEX, playerPed, componentId);
@@ -494,5 +498,23 @@ public class Heat : Script
     private bool isAnimPlaying()
     {
         return Function.Call<bool>(GTA.Native.Hash.IS_ENTITY_PLAYING_ANIM, Game.Player.Character, currentDict, currentAnim, 3);
+    }
+    private bool IsThrowable(WeaponHash weapon)
+    {
+        return weapon == WeaponHash.Grenade ||
+               weapon == WeaponHash.Ball ||
+               weapon == WeaponHash.BZGas ||
+               weapon == WeaponHash.Flare ||
+               weapon == WeaponHash.PipeBomb ||
+               weapon == WeaponHash.ProximityMine ||
+               weapon == WeaponHash.SmokeGrenade ||
+               weapon == WeaponHash.Snowball ||
+               weapon == WeaponHash.Molotov ||
+               weapon == WeaponHash.StickyBomb ||
+               weapon == WeaponHash.FireExtinguisher;
+    }
+    private bool IsWeaponExempted(WeaponHash weapon)
+    {
+        return exemptionList.Contains(weapon);
     }
 }
