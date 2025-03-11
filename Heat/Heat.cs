@@ -19,23 +19,29 @@ public class Heat : Script
     private List<WeaponHash> weaponList = new List<WeaponHash>();
     private List<WeaponHash> exemptionList = new List<WeaponHash>();
     private List<int[]> bagList = new List<int[]>();
-    private string currentAnim, currentDict;
+    private string clothingAnim, clothingDict;
     private bool IsLButtonDisabled = false;
 
     private String isDryfireToggled = "True";
     private int lastSprintedTime = 0;
     private int hatComponent = -1, hatTexture = -1, maskComponent = 0, maskTexture = -1, glassesComponent = -1, glassesTexture = -1;
 
-    private Keys equipMaskKey = Keys.Oemcomma, equipHatKey = Keys.OemPeriod, equipGlassesKey = Keys.OemQuestion;
+    private Keys equipMaskKey = Keys.Oemcomma, equipHatKey = Keys.OemPeriod, equipGlassesKey = Keys.OemQuestion, toggleDrivingStyle = Keys.G;
+    private bool isDrivingStyleToggled = false;
+
+    private string vehAnim = "sit";
+    private string vehDict = "";
 
     public Heat()
     {
         LoadIniFile("scripts//Heat//Heat.ini");
         Tick += BagSystem;
+        Tick += MonitorSitAnimation;
 
         if (isDryfireToggled.Equals("True")) Tick += Dryfire;
 
-        KeyUp += ToggleClothing;
+        KeyUp += ToggleClothing; 
+        KeyUp += ToggleDrivingStyle;
     }
 
     public void LoadIniFile(string iniFile)
@@ -49,8 +55,9 @@ public class Heat : Script
             Config = ScriptSettings.Load(iniFile);
             isDryfireToggled = Config.GetValue("SETTINGS", "EnableDryfire", isDryfireToggled);
             equipMaskKey = Config.GetValue("SETTINGS", "EquipMaskKey", equipMaskKey);
-            equipHatKey = Config.GetValue("SETTINGS", "EquipHatKey", equipHatKey);
+            equipHatKey = Config.GetValue("SETTINGS", "EquipHatKey", equipHatKey); 
             equipGlassesKey = Config.GetValue("SETTINGS", "EquipGlassesKey", equipGlassesKey);
+            equipGlassesKey = Config.GetValue("SETTINGS", "ToggleDrivingStyle", toggleDrivingStyle);
 
             string[] hashes = Config.GetAllValues("HASHES", "HASH");
 
@@ -143,6 +150,7 @@ public class Heat : Script
             writer.WriteLine($"EquipMaskKey={equipMaskKey}");
             writer.WriteLine($"EquipHatKey={equipHatKey}");
             writer.WriteLine($"EquipGlassesKey={equipGlassesKey}");
+            writer.WriteLine($"ToggleDrivingStyle={toggleDrivingStyle}");
             writer.WriteLine("[BAGS]");
             writer.WriteLine("BAG=41,40");
             writer.WriteLine("BAG=45,44");
@@ -173,7 +181,7 @@ public class Heat : Script
         bool isSprinting = IsPlayerSprinting();
         bool isBagEquipped = IsBagEquipped(Game.Player.Character);
 
-        if (!HasPrimaryWeapons(playerPed) || isAnimPlaying())
+        if (!HasPrimaryWeapons(playerPed) || isAnimPlaying(clothingAnim, clothingDict))
             return;
 
         // Force player to equip weapon if bag not equipped
@@ -239,10 +247,114 @@ public class Heat : Script
             else PlaySound("weap_dryfire_smg.wav");
         }
     }
+    private void PlaySitAnimation()
+    {
+        Ped playerPed = Game.Player.Character;
+        if (playerPed == null || !playerPed.IsAlive || !playerPed.IsInVehicle()) return;
 
+        LoadVehAnims();
+
+        Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, vehDict, vehAnim, 1.0f, 1.0f, -1, 42, 1.0f, false, false, false);
+        playerPed.CurrentVehicle.RollDownWindow(0);
+        isDrivingStyleToggled = true;
+    }
+    private void StopSitAnimation()
+    {
+        Ped playerPed = Game.Player.Character;
+        if (playerPed == null || !playerPed.IsAlive || !playerPed.IsInVehicle()) return;
+
+        LoadVehAnims();
+
+        Function.Call(GTA.Native.Hash.CLEAR_PED_SECONDARY_TASK, playerPed);
+        Function.Call(GTA.Native.Hash.STOP_ANIM_TASK, playerPed, vehDict, vehAnim, 1);
+        isDrivingStyleToggled = false;
+    }
+    private void MonitorSitAnimation(object sender, EventArgs e)
+    {
+        Ped playerPed = Game.Player.Character;
+        Vehicle vehicle = playerPed.CurrentVehicle;
+
+        // Reset toggle bool when player dies or switches char
+        if (playerPed == null || !playerPed.IsAlive) { isDrivingStyleToggled = false; return; }
+
+        // If player playing animation, stop if player leaves vehicle.
+        if (!playerPed.IsInVehicle() && isAnimPlaying(vehAnim, vehDict)) { StopSitAnimation(); return; }
+
+        // Prevent tick from running if player is not in vehicle
+        if (!playerPed.IsInVehicle()) { isDrivingStyleToggled = false;  return; }
+
+        if (isAnimPlaying(vehAnim, vehDict))
+        {
+            if (!isDrivingStyleToggled || vehicle.Speed >= 27 || Game.IsControlJustPressed(0, GTA.Control.VehicleHorn) || playerPed.IsDoingDriveBy) StopSitAnimation();
+        }
+        else if (isDrivingStyleToggled) { PlaySitAnimation();  }
+    }
+    private void LoadVehAnims()
+    {
+        string vehicleType = GetVehicleType(Game.Player.Character.CurrentVehicle.Model.Hash);
+
+        GetVehAnimDict(vehicleType);
+
+        Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, vehDict);
+        while (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, vehDict)) Wait(10);
+    }
+    private string GetVehicleType(int modelHash)
+    {
+        string modelName = Function.Call<string>(GTA.Native.Hash.GET_DISPLAY_NAME_FROM_VEHICLE_MODEL, modelHash).ToLower();
+
+        if (modelName.Contains("low")) return "low";
+        else if (modelName.Contains("high")) return "high";
+        else if (modelName.Contains("suv") || modelName.Contains("truck")) return "suv";
+        else if (modelName.Contains("bike") || modelName.Contains("motorcycle")) return "bike";
+
+        return "car"; // Default type
+    }
+    private void GetVehAnimDict(string vehicleType)
+    {
+        vehAnim = "sit";
+
+        if (vehicleType.Contains("_low"))
+        {
+            vehAnim = "sit_low";
+            vehicleType = vehicleType.Replace("_low", "");
+        }
+        else if (vehicleType.Contains("_high"))
+        {
+            vehAnim = "sit_high";
+            vehicleType = vehicleType.Replace("_high", "");
+        }
+
+        if (vehicleType == "car")
+        {
+            vehDict = "anim@veh@lowrider@low@front_ds@arm@base";
+        }
+        else
+        {
+            vehDict = $"anim@veh@sit_variations@{vehicleType}@front@idle_a";
+        }
+    }
+    private void ToggleDrivingStyle(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Y)
+        {
+            UI.Notify($"{Function.Call<float>(GTA.Native.Hash.GET_ENTITY_ANIM_CURRENT_TIME, Game.Player.Character, vehDict, vehAnim)}");
+            UI.Notify($"{isAnimPlaying(vehAnim, vehDict)}");
+        }
+        if (e.KeyCode == Keys.B)
+        {
+            Function.Call(GTA.Native.Hash.CLEAR_PED_TASKS_IMMEDIATELY, Game.Player.Character);
+            UI.Notify($"clear anim");
+        }
+        if (!Game.Player.Character.IsInVehicle()) return;
+
+        if (e.KeyCode == toggleDrivingStyle)
+        {
+            isDrivingStyleToggled = !isDrivingStyleToggled;
+        }
+    }
     private void ToggleClothing(object sender, KeyEventArgs e)
     {
-        if (isAnimPlaying()) return;
+        if (isAnimPlaying(clothingAnim, clothingDict)) return;
 
         if (e.KeyCode == equipMaskKey)
         {
@@ -346,8 +458,8 @@ public class Heat : Script
             Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
         }
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1200, 49, 0, 0, 0, 0);
-        currentAnim = animName;
-        currentDict = animDict;
+        clothingAnim = animName;
+        clothingDict = animDict;
         Wait(800);
 
         maskComponent = GetComponentVariation(playerPed, 1);
@@ -368,8 +480,8 @@ public class Heat : Script
             Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
 
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 750, 49, 0, 0, 0, 0);
-        currentAnim = animName;
-        currentDict = animDict;
+        clothingAnim = animName;
+        clothingDict = animDict;
         Wait(350);
 
         SetComponentVariation(playerPed, 1, maskComponent, maskTexture, 0);
@@ -386,8 +498,8 @@ public class Heat : Script
             Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
 
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1200, 49, 0, 0, 0, 0);
-        currentAnim = animName;
-        currentDict = animDict;
+        clothingAnim = animName;
+        clothingDict = animDict;
         Wait(1200);
 
         hatComponent = GetPropVariation(playerPed, 0);
@@ -407,8 +519,8 @@ public class Heat : Script
             Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
 
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
-        currentAnim = animName;
-        currentDict = animDict;
+        clothingAnim = animName;
+        clothingDict = animDict;
         Wait(1700);
 
         SetPropVariation(playerPed, 0, hatComponent, hatTexture, true);
@@ -425,8 +537,8 @@ public class Heat : Script
             Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
 
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1500, 49, 0, 0, 0, 0);
-        currentAnim = animName;
-        currentDict = animDict;
+        clothingAnim = animName;
+        clothingDict = animDict;
         Wait(1300);
 
         glassesComponent = GetPropVariation(playerPed, 1);
@@ -447,8 +559,8 @@ public class Heat : Script
             Function.Call(GTA.Native.Hash.REQUEST_ANIM_DICT, animDict);
 
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, animDict, animName, 8f, 8f, 1700, 49, 0, 0, 0, 0);
-        currentAnim = animName;
-        currentDict = animDict;
+        clothingAnim = animName;
+        clothingDict = animDict;
         Wait(1500);
 
         SetPropVariation(playerPed, 1, glassesComponent, glassesTexture, true);
@@ -495,9 +607,10 @@ public class Heat : Script
         return bagList.Any(bag => bag[0] == Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5)) || bagList.Any(bag => bag[1] == Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5));
     }
     
-    private bool isAnimPlaying()
+    private bool isAnimPlaying(string anim, string dict)
     {
-        return Function.Call<bool>(GTA.Native.Hash.IS_ENTITY_PLAYING_ANIM, Game.Player.Character, currentDict, currentAnim, 3);
+        if (!Function.Call<bool>(GTA.Native.Hash.HAS_ANIM_DICT_LOADED, dict)) return false;
+        return Function.Call<bool>(GTA.Native.Hash.IS_ENTITY_PLAYING_ANIM, Game.Player.Character, dict, anim, 3);
     }
     private bool IsThrowable(WeaponHash weapon)
     {
