@@ -11,6 +11,8 @@
 - Equip Mask, Glasses, Hat with Anims
 - Disabled Auto-Reload
   - Dryfire implemented
+- Relaxed Driving Style Anim
+  - Unfortunately, the right arm does not move along with the steering wheel.
 ## Installation
 - Place Heat.dll in scripts folder
 
