@@ -26,7 +26,7 @@ public class Heat : Script
     private int lastSprintedTime = 0;
     private int hatComponent = -1, hatTexture = -1, maskComponent = 0, maskTexture = -1, glassesComponent = -1, glassesTexture = -1;
 
-    private Keys equipMaskKey = Keys.Oemcomma, equipHatKey = Keys.OemPeriod, equipGlassesKey = Keys.OemQuestion, toggleDrivingStyle = Keys.G;
+    private Keys equipMaskKey = Keys.Oemcomma, equipHatKey = Keys.OemPeriod, equipGlassesKey = Keys.OemQuestion, toggleDrivingStyleKey = Keys.G;
     private bool isDrivingStyleToggled = false;
 
     private string vehAnim = "sit";
@@ -57,7 +57,7 @@ public class Heat : Script
             equipMaskKey = Config.GetValue("SETTINGS", "EquipMaskKey", equipMaskKey);
             equipHatKey = Config.GetValue("SETTINGS", "EquipHatKey", equipHatKey); 
             equipGlassesKey = Config.GetValue("SETTINGS", "EquipGlassesKey", equipGlassesKey);
-            equipGlassesKey = Config.GetValue("SETTINGS", "ToggleDrivingStyle", toggleDrivingStyle);
+            toggleDrivingStyleKey = Config.GetValue("SETTINGS", "ToggleDrivingStyleKey", toggleDrivingStyleKey);
 
             string[] hashes = Config.GetAllValues("HASHES", "HASH");
 
@@ -150,7 +150,7 @@ public class Heat : Script
             writer.WriteLine($"EquipMaskKey={equipMaskKey}");
             writer.WriteLine($"EquipHatKey={equipHatKey}");
             writer.WriteLine($"EquipGlassesKey={equipGlassesKey}");
-            writer.WriteLine($"ToggleDrivingStyle={toggleDrivingStyle}");
+            writer.WriteLine($"ToggleDrivingStyleKey={toggleDrivingStyleKey}");
             writer.WriteLine("[BAGS]");
             writer.WriteLine("BAG=41,40");
             writer.WriteLine("BAG=45,44");
@@ -250,7 +250,7 @@ public class Heat : Script
     private void PlaySitAnimation()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed == null || !playerPed.IsAlive || !playerPed.IsInVehicle()) return;
+        if (playerPed == null || !playerPed.IsAlive || !playerPed.IsInVehicle() || playerPed.CurrentVehicle.Speed >= 27) { isDrivingStyleToggled = false;  return; }
 
         LoadVehAnims();
 
@@ -264,6 +264,7 @@ public class Heat : Script
         if (playerPed == null || !playerPed.IsAlive || !playerPed.IsInVehicle()) return;
 
         LoadVehAnims();
+        //FreeArm(playerPed);
 
         Function.Call(GTA.Native.Hash.CLEAR_PED_SECONDARY_TASK, playerPed);
         Function.Call(GTA.Native.Hash.STOP_ANIM_TASK, playerPed, vehDict, vehAnim, 1);
@@ -285,6 +286,7 @@ public class Heat : Script
 
         if (isAnimPlaying(vehAnim, vehDict))
         {
+            // need to add steer_lean anims when player turning
             if (!isDrivingStyleToggled || vehicle.Speed >= 27 || Game.IsControlJustPressed(0, GTA.Control.VehicleHorn) || playerPed.IsDoingDriveBy) StopSitAnimation();
         }
         else if (isDrivingStyleToggled) { PlaySitAnimation();  }
@@ -335,11 +337,12 @@ public class Heat : Script
     }
     private void ToggleDrivingStyle(object sender, KeyEventArgs e)
     {
+        /*
         if (e.KeyCode == Keys.Y)
         {
             UI.Notify($"{Function.Call<float>(GTA.Native.Hash.GET_ENTITY_ANIM_CURRENT_TIME, Game.Player.Character, vehDict, vehAnim)}");
             UI.Notify($"{isAnimPlaying(vehAnim, vehDict)}");
-        }
+        }*/
         if (e.KeyCode == Keys.B)
         {
             Function.Call(GTA.Native.Hash.CLEAR_PED_TASKS_IMMEDIATELY, Game.Player.Character);
@@ -347,7 +350,7 @@ public class Heat : Script
         }
         if (!Game.Player.Character.IsInVehicle()) return;
 
-        if (e.KeyCode == toggleDrivingStyle)
+        if (e.KeyCode == toggleDrivingStyleKey)
         {
             isDrivingStyleToggled = !isDrivingStyleToggled;
         }
