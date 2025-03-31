@@ -22,12 +22,12 @@ public class Heat : Script
     private string clothingAnim, clothingDict;
     private bool IsLButtonDisabled = false;
 
-    private String isDryfireToggled = "True";
+    private string isDryfireEnabled = "True", isBagSystemEnabled = "True", isDrivingStyleEnabled = "True";
     private int lastSprintedTime = 0;
     private int hatComponent = -1, hatTexture = -1, maskComponent = 0, maskTexture = -1, glassesComponent = -1, glassesTexture = -1;
 
     private Keys equipMaskKey = Keys.Oemcomma, equipHatKey = Keys.OemPeriod, equipGlassesKey = Keys.OemQuestion, toggleDrivingStyleKey = Keys.G;
-    private bool isDrivingStyleToggled = false;
+    private bool isDrivingStyleOn = false;
 
     private string vehAnim = "sit";
     private string vehDict = "";
@@ -35,13 +35,14 @@ public class Heat : Script
     public Heat()
     {
         LoadIniFile("scripts//Heat//Heat.ini");
-        Tick += BagSystem;
-        Tick += MonitorSitAnimation;
 
-        if (isDryfireToggled.Equals("True")) Tick += Dryfire;
+        if (Game.Player.Character.IsInVehicle()) LoadVehAnims();
 
-        KeyUp += ToggleClothing; 
-        KeyUp += ToggleDrivingStyle;
+        if (isDrivingStyleEnabled.Equals("True")) { Tick += MonitorSitAnimation; KeyUp += ToggleDrivingStyle; }
+        if (isBagSystemEnabled.Equals("True")) Tick += BagSystem;
+        if (isDryfireEnabled.Equals("True")) Tick += Dryfire;
+
+        KeyUp += ToggleClothing;
     }
 
     public void LoadIniFile(string iniFile)
@@ -53,7 +54,9 @@ public class Heat : Script
         try
         {
             Config = ScriptSettings.Load(iniFile);
-            isDryfireToggled = Config.GetValue("SETTINGS", "EnableDryfire", isDryfireToggled);
+            isDrivingStyleEnabled = Config.GetValue("SETTINGS", "RelaxedDrivingStyle", isDrivingStyleEnabled);
+            isBagSystemEnabled = Config.GetValue("SETTINGS", "EnableBagSystem", isBagSystemEnabled);
+            isDryfireEnabled = Config.GetValue("SETTINGS", "EnableDryfire", isDryfireEnabled);
             equipMaskKey = Config.GetValue("SETTINGS", "EquipMaskKey", equipMaskKey);
             equipHatKey = Config.GetValue("SETTINGS", "EquipHatKey", equipHatKey); 
             equipGlassesKey = Config.GetValue("SETTINGS", "EquipGlassesKey", equipGlassesKey);
@@ -146,7 +149,9 @@ public class Heat : Script
             writer.WriteLine("HASH=1834241177");
             writer.WriteLine("HASH=3347935668"); 
             writer.WriteLine("[SETTINGS]");
-            writer.WriteLine($"EnableDryfire={isDryfireToggled}");
+            writer.WriteLine($"RelaxedDrivingStyle={isDrivingStyleEnabled}");
+            writer.WriteLine($"EnableBagSystem={isBagSystemEnabled}");
+            writer.WriteLine($"EnableDryfire={isDryfireEnabled}");
             writer.WriteLine($"EquipMaskKey={equipMaskKey}");
             writer.WriteLine($"EquipHatKey={equipHatKey}");
             writer.WriteLine($"EquipGlassesKey={equipGlassesKey}");
@@ -250,25 +255,20 @@ public class Heat : Script
     private void PlaySitAnimation()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed == null || !playerPed.IsAlive || !playerPed.IsInVehicle() || playerPed.CurrentVehicle.Speed >= 27) { isDrivingStyleToggled = false;  return; }
-
-        LoadVehAnims();
+        if (playerPed == null || !playerPed.IsAlive || playerPed.CurrentVehicle.Speed >= 27) { isDrivingStyleOn = false;  return; }
 
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, vehDict, vehAnim, 1.0f, 1.0f, -1, 42, 1.0f, false, false, false);
         playerPed.CurrentVehicle.RollDownWindow(0);
-        isDrivingStyleToggled = true;
+        isDrivingStyleOn = true;
     }
     private void StopSitAnimation()
     {
         Ped playerPed = Game.Player.Character;
-        if (playerPed == null || !playerPed.IsAlive || !playerPed.IsInVehicle()) return;
-
-        LoadVehAnims();
-        //FreeArm(playerPed);
+        if (playerPed == null || !playerPed.IsAlive || string.IsNullOrEmpty(vehDict) || string.IsNullOrEmpty(vehAnim)) return;
 
         Function.Call(GTA.Native.Hash.CLEAR_PED_SECONDARY_TASK, playerPed);
         Function.Call(GTA.Native.Hash.STOP_ANIM_TASK, playerPed, vehDict, vehAnim, 1);
-        isDrivingStyleToggled = false;
+        isDrivingStyleOn = false;
     }
     private void MonitorSitAnimation(object sender, EventArgs e)
     {
@@ -276,20 +276,22 @@ public class Heat : Script
         Vehicle vehicle = playerPed.CurrentVehicle;
 
         // Reset toggle bool when player dies or switches char
-        if (playerPed == null || !playerPed.IsAlive) { isDrivingStyleToggled = false; return; }
+        if (playerPed == null || !playerPed.IsAlive) { isDrivingStyleOn = false; return; }
 
         // If player playing animation, stop if player leaves vehicle.
         if (!playerPed.IsInVehicle() && isAnimPlaying(vehAnim, vehDict)) { StopSitAnimation(); return; }
 
         // Prevent tick from running if player is not in vehicle
-        if (!playerPed.IsInVehicle()) { isDrivingStyleToggled = false;  return; }
+        if (!playerPed.IsInVehicle()) { isDrivingStyleOn = false;  return; }
+
+        LoadVehAnims();
 
         if (isAnimPlaying(vehAnim, vehDict))
         {
             // need to add steer_lean anims when player turning
-            if (!isDrivingStyleToggled || vehicle.Speed >= 27 || Game.IsControlJustPressed(0, GTA.Control.VehicleHorn) || playerPed.IsDoingDriveBy) StopSitAnimation();
+            if (!isDrivingStyleOn || vehicle.Speed >= 27 || Game.IsControlJustPressed(0, GTA.Control.VehicleHorn) || playerPed.IsDoingDriveBy) { StopSitAnimation(); }
         }
-        else if (isDrivingStyleToggled) { PlaySitAnimation();  }
+        else if (isDrivingStyleOn) { PlaySitAnimation();  }
     }
     private void LoadVehAnims()
     {
@@ -340,19 +342,20 @@ public class Heat : Script
         /*
         if (e.KeyCode == Keys.Y)
         {
-            UI.Notify($"{Function.Call<float>(GTA.Native.Hash.GET_ENTITY_ANIM_CURRENT_TIME, Game.Player.Character, vehDict, vehAnim)}");
-            UI.Notify($"{isAnimPlaying(vehAnim, vehDict)}");
-        }*/
+            //UI.Notify($"{Function.Call<float>(GTA.Native.Hash.GET_ENTITY_ANIM_CURRENT_TIME, Game.Player.Character, vehDict, vehAnim)}");
+            //UI.Notify($"{isAnimPlaying(vehAnim, vehDict)}");
+            StopSitAnimation();
+        }
         if (e.KeyCode == Keys.B)
         {
             Function.Call(GTA.Native.Hash.CLEAR_PED_TASKS_IMMEDIATELY, Game.Player.Character);
             UI.Notify($"clear anim");
-        }
+        }*/
         if (!Game.Player.Character.IsInVehicle()) return;
 
         if (e.KeyCode == toggleDrivingStyleKey)
         {
-            isDrivingStyleToggled = !isDrivingStyleToggled;
+            isDrivingStyleOn = !isDrivingStyleOn;
         }
     }
     private void ToggleClothing(object sender, KeyEventArgs e)
