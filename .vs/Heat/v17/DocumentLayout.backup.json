@@ -3,8 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\heat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\heat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\dryfire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\dryfire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\heatsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\heatsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\bagsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\bagsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\heat_old.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\heat_old.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\relaxeddrivingstyle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\relaxeddrivingstyle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\toggleclothing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\toggleclothing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,13 +46,91 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Main.cs",
+              "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Main.cs",
+              "RelativeDocumentMoniker": "Heat\\Main.cs",
+              "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Main.cs",
+              "RelativeToolTip": "Heat\\Main.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAqwBgAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-04T15:08:58.532Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HeatSettings.cs",
+              "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\HeatSettings.cs",
+              "RelativeDocumentMoniker": "Heat\\HeatSettings.cs",
+              "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\HeatSettings.cs",
+              "RelativeToolTip": "Heat\\HeatSettings.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAzwCcAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-04T14:50:46.389Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ToggleClothing.cs",
+              "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\ToggleClothing.cs",
+              "RelativeDocumentMoniker": "Heat\\ToggleClothing.cs",
+              "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\ToggleClothing.cs",
+              "RelativeToolTip": "Heat\\ToggleClothing.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAASwA8AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-04T14:51:37.871Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RelaxedDrivingStyle.cs",
+              "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\RelaxedDrivingStyle.cs",
+              "RelativeDocumentMoniker": "Heat\\RelaxedDrivingStyle.cs",
+              "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\RelaxedDrivingStyle.cs",
+              "RelativeToolTip": "Heat\\RelaxedDrivingStyle.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-04T14:46:56.757Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Heat.cs",
-              "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Heat.cs",
-              "RelativeDocumentMoniker": "Heat\\Heat.cs",
-              "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Heat.cs",
-              "RelativeToolTip": "Heat\\Heat.cs",
-              "ViewState": "AgIAAJ8AAAAAAAAAAAAuwLQAAABTAAAAAAAAAA==",
+              "Title": "Dryfire.cs",
+              "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Dryfire.cs",
+              "RelativeDocumentMoniker": "Heat\\Dryfire.cs",
+              "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Dryfire.cs",
+              "RelativeToolTip": "Heat\\Dryfire.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAgwCMAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-04T14:42:03.686Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BagSystem.cs",
+              "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\BagSystem.cs",
+              "RelativeDocumentMoniker": "Heat\\BagSystem.cs",
+              "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\BagSystem.cs",
+              "RelativeToolTip": "Heat\\BagSystem.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAiwCQAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-04T14:38:57.454Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Heat_old.cs",
+              "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Heat_old.cs",
+              "RelativeDocumentMoniker": "Heat\\Heat_old.cs",
+              "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Heat_old.cs",
+              "RelativeToolTip": "Heat\\Heat_old.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-17T20:30:49.619Z",
               "EditorCaption": ""

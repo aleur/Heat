@@ -14,7 +14,7 @@ using static System.Collections.Specialized.BitVector32;
 using System.Media;
 
 public class Heat : Script
-{
+{ /*
     public ScriptSettings Config;
     private List<WeaponHash> weaponList = new List<WeaponHash>();
     private List<WeaponHash> exemptionList = new List<WeaponHash>();
@@ -26,7 +26,7 @@ public class Heat : Script
     private int hatComponent = -1, hatTexture = -1, maskComponent = 0, maskTexture = -1, glassesComponent = -1, glassesTexture = -1;
 
     private Keys equipMaskKey = Keys.Oemcomma, equipHatKey = Keys.OemPeriod, equipGlassesKey = Keys.OemQuestion, toggleDrivingStyleKey = Keys.G;
-    private bool isDrivingStyleOn = false;
+    private bool isDrivingStyleOn = false, mButtonDisabled = false;
 
     private string vehAnim = "sit";
     private string vehDict = "";
@@ -231,7 +231,7 @@ public class Heat : Script
         bool weaponCheck = currentWeapon == null || Function.Call<bool>(GTA.Native.Hash.IS_PED_ARMED, player, 4) || currentWeapon.Hash == WeaponHash.Unarmed || IsWeaponExempted(currentWeapon.Hash) || IsThrowable(currentWeapon.Hash);
 
         // Check if the player is holding a weapon
-        if ((currentWeapon == null || weaponCheck) && (currentWeapon.AmmoInClip != 1 || IsWeaponExempted(currentWeapon.Hash)) || IsThrowable(currentWeapon.Hash))
+        if (!mButtonDisabled && weaponCheck && (currentWeapon.AmmoInClip != 1 || IsWeaponExempted(currentWeapon.Hash)) || IsThrowable(currentWeapon.Hash))
         {
             Function.Call(GTA.Native.Hash.ENABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, true);
             Function.Call(GTA.Native.Hash.ENABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, true);
@@ -346,6 +346,7 @@ public class Heat : Script
             Function.Call(GTA.Native.Hash.CLEAR_PED_TASKS_IMMEDIATELY, Game.Player.Character);
             UI.Notify($"clear anim");
         }*/
+    /*
         if (!Game.Player.Character.IsInVehicle()) return;
 
         if (e.KeyCode == toggleDrivingStyleKey)
@@ -630,5 +631,5 @@ public class Heat : Script
     private bool IsWeaponExempted(WeaponHash weapon)
     {
         return exemptionList.Contains(weapon);
-    }
+    }*/
 }
