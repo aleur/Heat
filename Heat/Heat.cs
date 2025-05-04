@@ -178,7 +178,7 @@ public class Heat : Script
         int bagComponent = GetComponentVariation(playerPed, 5);
 
         int[] equippedBag = bagList.FirstOrDefault(bag => bag[0] == bagComponent || bag[1] == bagComponent);
-        if (playerPed.IsInVehicle() || !playerPed.IsAlive)
+        if (playerPed.IsInVehicle() || !playerPed.IsAlive || !playerPed.IsSwimming)
             return;
 
         WeaponHash currentWeapon = Game.Player.Character.Weapons.Current.Hash;
@@ -231,7 +231,7 @@ public class Heat : Script
         bool weaponCheck = currentWeapon == null || Function.Call<bool>(GTA.Native.Hash.IS_PED_ARMED, player, 4) || currentWeapon.Hash == WeaponHash.Unarmed || IsWeaponExempted(currentWeapon.Hash) || IsThrowable(currentWeapon.Hash);
 
         // Check if the player is holding a weapon
-        if ((currentWeapon == null || weaponCheck) && (currentWeapon.AmmoInClip != 1 || IsWeaponExempted(currentWeapon.Hash)))
+        if ((currentWeapon == null || weaponCheck) && (currentWeapon.AmmoInClip != 1 || IsWeaponExempted(currentWeapon.Hash)) || IsThrowable(currentWeapon.Hash))
         {
             Function.Call(GTA.Native.Hash.ENABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, true);
             Function.Call(GTA.Native.Hash.ENABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, true);
