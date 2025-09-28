@@ -42,7 +42,7 @@ public class Dryfire : Script
         Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack, false); // keys are inconsistent
         Function.Call(GTA.Native.Hash.DISABLE_CONTROL_ACTION, 0, (int)GTA.Control.Attack2, false);
 
-        if (!player.IsReloading && (Game.Player.IsAiming || player.IsAimingFromCover) && (Game.IsControlJustReleased(0, GTA.Control.Attack) || Game.IsControlJustReleased(0, GTA.Control.Attack2)))
+        if (!player.IsReloading && (Game.Player.IsAiming || player.IsAimingFromCover) && (Game.IsControlJustReleased(GTA.Control.Attack) || Game.IsControlJustReleased(GTA.Control.Attack2)))
         {
             if (IsPrimaryWeapon(player.Weapons.Current.Hash)) PlaySound("weap_dryfire_rifle.wav");
             else PlaySound("weap_dryfire_smg.wav");

@@ -48,7 +48,7 @@ public static class HeatSettings
             equipGlassesKey = Config.GetValue("SETTINGS", "EquipGlassesKey", equipGlassesKey);
             toggleDrivingStyleKey = Config.GetValue("SETTINGS", "ToggleDrivingStyleKey", toggleDrivingStyleKey);
 
-            string[] hashes = Config.GetAllValues("HASHES", "HASH");
+            string[] hashes = Config.GetAllValues<string>("HASHES", "HASH");
 
             foreach (var hash in hashes)
             {
@@ -57,8 +57,7 @@ public static class HeatSettings
                     weaponList.Add((WeaponHash)weaponHash);
                 }
             }
-
-            string[] bags = Config.GetAllValues("BAGS", "BAG");
+            string[] bags = Config.GetAllValues<string>("BAGS", "BAG");
             foreach (var bag in bags)
             {
                 string[] parts = bag.Split(',');
@@ -69,7 +68,7 @@ public static class HeatSettings
                 }
             }
 
-            string[] exemptions = Config.GetAllValues("EXEMPTIONS", "HASH");
+            string[] exemptions = Config.GetAllValues<string>("EXEMPTIONS", "HASH");
             foreach (var exemption in exemptions)
             {
                 if (uint.TryParse(exemption.Trim(), out uint weaponHash))
@@ -78,11 +77,11 @@ public static class HeatSettings
                 }
             }
 
-            UI.Notify("~r~Heat~s~: Loaded " + weaponList.Count + " weapons from " + iniFile);
+            GTA.UI.Notification.PostTicker("~r~Heat~s~: Loaded " + weaponList.Count + " weapons from " + iniFile,true,true);
         }
         catch (Exception ex)
         {
-            UI.Notify("~r~Heat Error~s~: " + iniFile + " resetting ini file");
+            GTA.UI.Notification.PostTicker("~r~Heat Error~s~: " + iniFile + " resetting ini file",true,true);
             CreateDefaultConfig(iniFile);
         }
     }
@@ -157,6 +156,6 @@ public static class HeatSettings
             writer.WriteLine("HASH=2939590305");
             writer.WriteLine("HASH=3696079510");
         }
-        UI.Notify("~r~Heat~s~ : ~g~Default Config created");
+        GTA.UI.Notification.PostTicker("~r~Heat~s~ : ~g~Default Config created",true,true);
     }
 }

@@ -6,11 +6,14 @@
 ![](https://img.shields.io/github/commit-activity/w/aleur/Heat)
 ## Features
 - Bag System
-  - If player has bag, player can store primary weapons
-  - If not, they can't deposit their weapons
+  - If player has bag, player can store primary weapons.
+  - If not, they can't deposit their weapons, but forced to hold at least one weapon in hand.
+  - Integrated with [mbahdokek](https://github.com/mbahdokek)'s Trail Carry so Player holds the Primary weapon in their off hand.
+    -   Big ups to them for letting me have access to their code.
+    -   Only made minor tweaks to make it work with my script
 - Equip Mask, Glasses, Hat with Anims
-- Disabled Auto-Reload
-  - Dryfire implemented
+- Disabled Auto-Reload _(while shooting)_
+  - Dryfire implemented. Gun can't fire when ammo reaches 1.
 - Relaxed Driving Style Anim
   - Unfortunately, the right arm does not move along with the steering wheel.
 ## Installation

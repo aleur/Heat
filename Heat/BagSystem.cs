@@ -12,12 +12,18 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using static System.Collections.Specialized.BitVector32;
 using System.Media;
+using System.Reflection;
+using static TrailCarry.Utils;
 
 public class BagSystem : Script
 {
     private List<WeaponHash> weaponList = HeatSettings.weaponList;
     private List<int[]> bagList = HeatSettings.bagList;
     private string clothingAnim, clothingDict;
+    private bool playerActing = Game.Player.Character.IsSwimming || Game.Player.Character.IsSwimming || Game.Player.Character.IsClimbing || Game.Player.Character.IsCuffed; 
+    private bool isMainCharacter =  Game.Player.Character.Model == new Model("player_zero") ||
+                                    Game.Player.Character.Model == new Model("player_one") ||
+                                    Game.Player.Character.Model == new Model("player_two");
 
     public BagSystem()
     {
@@ -29,24 +35,33 @@ public class BagSystem : Script
         int bagComponent = GetComponentVariation(playerPed, 5);
 
         int[] equippedBag = bagList.FirstOrDefault(bag => bag[0] == bagComponent || bag[1] == bagComponent);
-        if (playerPed.IsInVehicle() || !playerPed.IsAlive || playerPed.IsSwimming)
+        if (playerPed.IsInVehicle() || !playerPed.IsAlive || playerActing)
             return;
 
         WeaponHash currentWeapon = Game.Player.Character.Weapons.Current.Hash;
         bool isSprinting = IsPlayerSprinting();
-        bool isBagEquipped = IsBagEquipped(Game.Player.Character);
 
+        // Early return if no primary weapons
         if (!HasPrimaryWeapons(playerPed) || isAnimPlaying(clothingAnim, clothingDict))
             return;
 
         // Force player to equip weapon if bag not equipped
-        if (!isBagEquipped)
+        if (!IsBagEquipped(Game.Player.Character))
         {
-            if (currentWeapon != weaponList.FirstOrDefault(weaponHash => weaponHash == currentWeapon))
+            /*
+            if (currentWeapon != weaponList.FirstOrDefault(weaponHash => weaponHash == currentWeapon)) // Player may switch to either throwable or secondary
             {
-                // If player has primary weapon, but no bag, equip primary weapon.
+
+            }
+            else if (currentWeapon == 0) // If player is empty handed, must equip primary weapon
+            {
+                EquipAppropriateWeapon();
+            }*/
+            if (currentWeapon == WeaponHash.Unarmed) // If player is empty handed, must equip primary weapon
+            {
                 EquipAppropriateWeapon();
             }
+
             return;
         }
 
@@ -108,11 +123,12 @@ public class BagSystem : Script
     {
         Function.Call(GTA.Native.Hash.SET_PED_COMPONENT_VARIATION, playerPed, componentId, drawableId, textureId, paletteId);
     }
-
+    /*
     private bool IsBagEquipped(Ped playerPed)
     {
+        if (isMainCharacter) return Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 9) != 0;
         return Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5) != 0;
-    }
+    }*/
     private bool HasConfigBagEquipped(Ped playerPed)
     {
         return bagList.Any(bag => bag[0] == Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5)) || bagList.Any(bag => bag[1] == Function.Call<int>(GTA.Native.Hash.GET_PED_DRAWABLE_VARIATION, playerPed, 5));

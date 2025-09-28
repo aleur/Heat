@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using static System.Collections.Specialized.BitVector32;
 using System.Media;
+using TrailCarry;
 
 public class Main : Script
 {
@@ -19,6 +20,7 @@ public class Main : Script
     public RelaxedDrivingStyle DrivingStyle { get; set; }
     public Dryfire Dryfire { get; set; }
     public BagSystem BagSystem { get; set; }
+    public HandheldWeapons HandheldWeapons { get; set; }
 
     public Main()
     {
@@ -26,6 +28,6 @@ public class Main : Script
         if (true) ToggleClothing = new ToggleClothing();
         if (HeatSettings.isDrivingStyleEnabled.Equals("True")) DrivingStyle = new RelaxedDrivingStyle();
         if (HeatSettings.isDryfireEnabled.Equals("True")) Dryfire = new Dryfire();
-        if (HeatSettings.isBagSystemEnabled.Equals("True")) BagSystem = new BagSystem();
+        if (HeatSettings.isBagSystemEnabled.Equals("True")) { BagSystem = new BagSystem(); HandheldWeapons = new HandheldWeapons(); }
     }
 }

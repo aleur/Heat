@@ -34,7 +34,7 @@ public class RelaxedDrivingStyle : Script
         if (playerPed == null || !playerPed.IsAlive || playerPed.CurrentVehicle.Speed >= 27) { isDrivingStyleOn = false;  return; }
 
         Function.Call(GTA.Native.Hash.TASK_PLAY_ANIM, playerPed, vehDict, vehAnim, 1.0f, 1.0f, -1, 42, 1.0f, false, false, false);
-        playerPed.CurrentVehicle.RollDownWindow(0);
+        Function.Call(GTA.Native.Hash.ROLL_DOWN_WINDOW, playerPed.CurrentVehicle, 0);
         isDrivingStyleOn = true;
     }
     private void StopSitAnimation()
@@ -65,7 +65,7 @@ public class RelaxedDrivingStyle : Script
         if (isAnimPlaying(vehAnim, vehDict))
         {
             // need to add steer_lean anims when player turning
-            if (!isDrivingStyleOn || vehicle.Speed >= 27 || Game.IsControlJustPressed(0, GTA.Control.VehicleHorn) || playerPed.IsDoingDriveBy) { StopSitAnimation(); }
+            if (!isDrivingStyleOn || vehicle.Speed >= 27 || Game.IsControlJustPressed(GTA.Control.VehicleHorn) || playerPed.IsDoingDriveBy) { StopSitAnimation(); }
         }
         else if (isDrivingStyleOn) { PlaySitAnimation();  }
     }
