@@ -3,31 +3,31 @@
   "WorkspaceRootPath": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\dryfire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\dryfire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\heatsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\heatsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\bagsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\bagsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\heat_old.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\dryfire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\dryfire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\heatsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\heatsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\heat_old.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\heat_old.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\relaxeddrivingstyle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\relaxeddrivingstyle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\relaxeddrivingstyle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\toggleclothing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\toggleclothing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\toggleclothing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -38,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,7 +46,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Main.cs",
               "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Main.cs",
               "RelativeDocumentMoniker": "Heat\\Main.cs",
@@ -54,12 +54,11 @@
               "RelativeToolTip": "Heat\\Main.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAqwBgAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T15:08:58.532Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T15:08:58.532Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "HeatSettings.cs",
               "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\HeatSettings.cs",
               "RelativeDocumentMoniker": "Heat\\HeatSettings.cs",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "Heat\\HeatSettings.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAzwCcAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T14:50:46.389Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T14:50:46.389Z"
             },
             {
               "$type": "Document",
@@ -80,8 +78,7 @@
               "RelativeToolTip": "Heat\\ToggleClothing.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAASwA8AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T14:51:37.871Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T14:51:37.871Z"
             },
             {
               "$type": "Document",
@@ -93,31 +90,29 @@
               "RelativeToolTip": "Heat\\RelaxedDrivingStyle.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T14:46:56.757Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T14:46:56.757Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Dryfire.cs",
               "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Dryfire.cs",
               "RelativeDocumentMoniker": "Heat\\Dryfire.cs",
               "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Dryfire.cs",
               "RelativeToolTip": "Heat\\Dryfire.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAgwCMAAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAgwCMAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T14:42:03.686Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-04T14:42:03.686Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "BagSystem.cs",
               "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\BagSystem.cs",
               "RelativeDocumentMoniker": "Heat\\BagSystem.cs",
               "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\BagSystem.cs",
               "RelativeToolTip": "Heat\\BagSystem.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAiwCQAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAHIAAAAAAAAAAAApwIAAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-04T14:38:57.454Z",
               "EditorCaption": ""
@@ -132,8 +127,7 @@
               "RelativeToolTip": "Heat\\Heat_old.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-17T20:30:49.619Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-17T20:30:49.619Z"
             }
           ]
         }
