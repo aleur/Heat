@@ -3,11 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\trail carry\\handheldweapons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\trail carry\\handheldweapons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\bagsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\bagsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\bagsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -15,12 +11,16 @@
       "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\trail carry\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\trail carry\\config.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\trail carry\\config.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\trail carry\\handheldweapons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\trail carry\\handheldweapons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\toggleclothing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\toggleclothing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\dryfire.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,12 +31,12 @@
       "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\relaxeddrivingstyle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\heatsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|c:\\users\\slatt\\documents\\github\\heat\\heat\\heatsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\heatsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\toggleclothing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\toggleclothing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|C:\\Users\\slatt\\Documents\\GitHub\\Heat\\heat\\trail carry\\config.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D2804EC-7921-4CFA-8D41-9AB3FE7F1FAA}|Heat\\Heat.csproj|solutionrelative:heat\\trail carry\\config.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,33 +54,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Utils.cs",
               "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Trail Carry\\Utils.cs",
               "RelativeDocumentMoniker": "Heat\\Trail Carry\\Utils.cs",
               "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Trail Carry\\Utils.cs",
               "RelativeToolTip": "Heat\\Trail Carry\\Utils.cs",
-              "ViewState": "AgIAANAAAAAAAAAAAAAAAOgAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAANUAAAAAAAAAAAAAwOsAAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-28T22:57:57.921Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "HandheldWeapons.cs",
               "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Trail Carry\\HandheldWeapons.cs",
               "RelativeDocumentMoniker": "Heat\\Trail Carry\\HandheldWeapons.cs",
               "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Trail Carry\\HandheldWeapons.cs",
               "RelativeToolTip": "Heat\\Trail Carry\\HandheldWeapons.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAQwCoAAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACEAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-28T21:02:54.57Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "Config.cs",
               "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Trail Carry\\Config.cs",
               "RelativeDocumentMoniker": "Heat\\Trail Carry\\Config.cs",
@@ -93,13 +93,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "Main.cs",
               "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Main.cs",
               "RelativeDocumentMoniker": "Heat\\Main.cs",
               "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Main.cs",
               "RelativeToolTip": "Heat\\Main.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAACDAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-04T15:08:58.532Z",
               "EditorCaption": ""
@@ -112,21 +112,23 @@
               "RelativeDocumentMoniker": "Heat\\HeatSettings.cs",
               "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\HeatSettings.cs",
               "RelativeToolTip": "Heat\\HeatSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAAIkAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T14:50:46.389Z"
+              "WhenOpened": "2025-05-04T14:50:46.389Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 4,
               "Title": "ToggleClothing.cs",
               "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\ToggleClothing.cs",
               "RelativeDocumentMoniker": "Heat\\ToggleClothing.cs",
               "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\ToggleClothing.cs",
               "RelativeToolTip": "Heat\\ToggleClothing.cs",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAmwFAAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T14:51:37.871Z"
+              "WhenOpened": "2025-05-04T14:51:37.871Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -136,9 +138,10 @@
               "RelativeDocumentMoniker": "Heat\\RelaxedDrivingStyle.cs",
               "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\RelaxedDrivingStyle.cs",
               "RelativeToolTip": "Heat\\RelaxedDrivingStyle.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAUwA0AAAATAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAABgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T14:46:56.757Z"
+              "WhenOpened": "2025-05-04T14:46:56.757Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -148,19 +151,20 @@
               "RelativeDocumentMoniker": "Heat\\Dryfire.cs",
               "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\Dryfire.cs",
               "RelativeToolTip": "Heat\\Dryfire.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAIA3wCgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-04T14:42:03.686Z"
+              "WhenOpened": "2025-05-04T14:42:03.686Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "BagSystem.cs",
               "DocumentMoniker": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\BagSystem.cs",
               "RelativeDocumentMoniker": "Heat\\BagSystem.cs",
               "ToolTip": "C:\\Users\\slatt\\Documents\\GitHub\\Heat\\Heat\\BagSystem.cs",
               "RelativeToolTip": "Heat\\BagSystem.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAAAEAAAAATAAAAAAAAAA==",
+              "ViewState": "AgIAADoAAAAAAAAAAAAQwE0AAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-04T14:38:57.454Z",
               "EditorCaption": ""

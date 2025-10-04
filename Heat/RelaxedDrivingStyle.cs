@@ -24,9 +24,9 @@ public class RelaxedDrivingStyle : Script
     public RelaxedDrivingStyle()
     {
         if (Game.Player.Character.IsInVehicle()) LoadVehAnims();
-
+        /*
         Tick += OnTick;
-        KeyUp += ToggleDrivingStyle;
+        KeyUp += ToggleDrivingStyle;*/
     }
     private void PlaySitAnimation()
     {
@@ -46,7 +46,7 @@ public class RelaxedDrivingStyle : Script
         Function.Call(GTA.Native.Hash.STOP_ANIM_TASK, playerPed, vehDict, vehAnim, 1);
         isDrivingStyleOn = false;
     }
-    private void OnTick(object sender, EventArgs e)
+    public void OnTick(object sender, EventArgs e)
     {
         Ped playerPed = Game.Player.Character;
         Vehicle vehicle = playerPed.CurrentVehicle;
@@ -113,7 +113,7 @@ public class RelaxedDrivingStyle : Script
             vehDict = $"anim@veh@sit_variations@{vehicleType}@front@idle_a";
         }
     }
-    private void ToggleDrivingStyle(object sender, KeyEventArgs e)
+    public void ToggleDrivingStyle(object sender, KeyEventArgs e)
     {
         /*
         if (e.KeyCode == Keys.Y)

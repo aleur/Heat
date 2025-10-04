@@ -20,19 +20,20 @@ public class BagSystem : Script
     private List<WeaponHash> weaponList = HeatSettings.weaponList;
     private List<int[]> bagList = HeatSettings.bagList;
     private string clothingAnim, clothingDict;
-    private bool playerActing = Game.Player.Character.IsSwimming || Game.Player.Character.IsSwimming || Game.Player.Character.IsClimbing || Game.Player.Character.IsCuffed; 
+    private bool playerActing = Game.Player.Character.IsSwimming || Game.Player.Character.IsSwimming || Game.Player.Character.IsClimbing || Game.Player.Character.IsCuffed;
     private bool isMainCharacter =  Game.Player.Character.Model == new Model("player_zero") ||
                                     Game.Player.Character.Model == new Model("player_one") ||
                                     Game.Player.Character.Model == new Model("player_two");
 
     public BagSystem()
     {
-        Tick += OnTick;
+
     }
-    private void OnTick(object sender, EventArgs e)
+    public void OnTick(object sender, EventArgs e)
     {
         Ped playerPed = Game.Player.Character;
         int bagComponent = GetComponentVariation(playerPed, 5);
+        int bagTexture = GetComponentTexture(playerPed, 5);
 
         int[] equippedBag = bagList.FirstOrDefault(bag => bag[0] == bagComponent || bag[1] == bagComponent);
         if (playerPed.IsInVehicle() || !playerPed.IsAlive || playerActing)
@@ -75,7 +76,7 @@ public class BagSystem : Script
             if (bagComponent == equippedBag[1])
             {
                 Wait(150);
-                SetComponentVariation(playerPed, 5, equippedBag[0], 0, 0);
+                SetComponentVariation(playerPed, 5, equippedBag[0], bagTexture, 0);
             }
         }
         else
@@ -83,7 +84,7 @@ public class BagSystem : Script
             if (bagComponent == equippedBag[0])
             {
                 Wait(150);
-                SetComponentVariation(playerPed, 5, equippedBag[1], 0, 0);
+                SetComponentVariation(playerPed, 5, equippedBag[1], bagTexture, 0);
             }
         }
     }
@@ -114,6 +115,10 @@ public class BagSystem : Script
                 break;
             }
         }
+    }
+    private int GetComponentTexture(Ped playerPed, int componentId)
+    {
+        return Function.Call<int>(GTA.Native.Hash.GET_PED_TEXTURE_VARIATION, playerPed, componentId);
     }
     private int GetComponentVariation(Ped playerPed, int componentId)
     {

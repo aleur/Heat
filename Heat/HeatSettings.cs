@@ -19,9 +19,10 @@ public static class HeatSettings
     public static List<WeaponHash> weaponList { get; private set; } = new List<WeaponHash>();
     public static List<WeaponHash> exemptionList { get; private set; } = new List<WeaponHash>();
     public static List<int[]> bagList { get; private set; } = new List<int[]>();
-    public static string isDryfireEnabled { get; private set; } = "True"; 
-    public static string isBagSystemEnabled { get; private set; } = "True"; 
-    public static string isDrivingStyleEnabled { get; private set; } = "True";
+    public static bool isClothingSystemEnabled { get; private set; } = true;
+    public static bool isDryfireEnabled { get; private set; } = true;
+    public static bool isBagSystemEnabled { get; private set; } = true;
+    public static bool isDrivingStyleEnabled { get; private set; } = true;
     public static Keys equipMaskKey { get; private set; } = Keys.Oemcomma; 
     public static Keys equipHatKey { get; private set; } = Keys.OemPeriod; 
     public static Keys equipGlassesKey { get; private set; } = Keys.OemQuestion; 
@@ -134,7 +135,8 @@ public static class HeatSettings
             writer.WriteLine("HASH=1834241177");
             writer.WriteLine("HASH=3347935668"); 
             writer.WriteLine("[SETTINGS]");
-            writer.WriteLine($"RelaxedDrivingStyle={isDrivingStyleEnabled}");
+            writer.WriteLine($"EnableClothingSystem={isClothingSystemEnabled}");
+            writer.WriteLine($"RelaxedDrivingStyle={isDrivingStyleEnabled}"); 
             writer.WriteLine($"EnableBagSystem={isBagSystemEnabled}");
             writer.WriteLine($"EnableDryfire={isDryfireEnabled}");
             writer.WriteLine($"EquipMaskKey={equipMaskKey}");

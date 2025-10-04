@@ -33,10 +33,10 @@ namespace TrailCarry
 
         public HandheldWeapons()
         {
-            Tick += new EventHandler(OnTick);
+
         }
 
-        private void OnTick(object sender, EventArgs e)
+        public void OnTick(object sender, EventArgs e)
         {
             MC = Game.Player.Character;
 

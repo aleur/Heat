@@ -16,18 +16,26 @@ using TrailCarry;
 
 public class Main : Script
 {
-    public ToggleClothing ToggleClothing { get; set; }
-    public RelaxedDrivingStyle DrivingStyle { get; set; }
-    public Dryfire Dryfire { get; set; }
-    public BagSystem BagSystem { get; set; }
-    public HandheldWeapons HandheldWeapons { get; set; }
+    public ToggleClothing ToggleClothing { get; set; } = new ToggleClothing();
+    public RelaxedDrivingStyle DrivingStyle { get; set; } = new RelaxedDrivingStyle();
+    public Dryfire Dryfire { get; set; } = new Dryfire();
+    public BagSystem BagSystem { get; set; } = new BagSystem();
+    public HandheldWeapons HandheldWeapons { get; set; } = new HandheldWeapons();
 
     public Main()
     {
         HeatSettings.LoadIniFile("scripts//Heat//Heat.ini");
-        if (true) ToggleClothing = new ToggleClothing();
-        if (HeatSettings.isDrivingStyleEnabled.Equals("True")) DrivingStyle = new RelaxedDrivingStyle();
-        if (HeatSettings.isDryfireEnabled.Equals("True")) Dryfire = new Dryfire();
-        if (HeatSettings.isBagSystemEnabled.Equals("True")) { BagSystem = new BagSystem(); HandheldWeapons = new HandheldWeapons(); }
+        if (HeatSettings.isClothingSystemEnabled) KeyUp += ToggleClothing.OnKeyUp;
+        if (HeatSettings.isDrivingStyleEnabled)
+        {
+            Tick += DrivingStyle.OnTick;
+            KeyUp += DrivingStyle.ToggleDrivingStyle;
+        }
+        if (HeatSettings.isDryfireEnabled) Tick += Dryfire.OnTick;
+        if (HeatSettings.isBagSystemEnabled)
+        {
+            Tick += BagSystem.OnTick;
+            Tick += new EventHandler(HandheldWeapons.OnTick);
+        }
     }
 }

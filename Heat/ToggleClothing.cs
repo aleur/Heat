@@ -24,9 +24,9 @@ public class ToggleClothing : Script
 
     public ToggleClothing()
     {
-        KeyUp += OnKeyUp;
+
     }
-    private void OnKeyUp(object sender, KeyEventArgs e)
+    public void OnKeyUp(object sender, KeyEventArgs e)
     {
         if (isAnimPlaying(clothingAnim, clothingDict)) return;
 

@@ -20,9 +20,9 @@ public class Dryfire : Script
 
     public Dryfire()
     {
-        Tick += OnTick;
+
     }
-    private void OnTick(object sender, EventArgs e)
+    public void OnTick(object sender, EventArgs e)
     {
         // Doesn't work for vehicles
 
